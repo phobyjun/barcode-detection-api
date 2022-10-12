@@ -4,7 +4,7 @@ import pyzbar.pyzbar as pyzbar
 import requests
 
 
-def barcode_detection(image):
+def detect(image):
     barcode = pyzbar.decode(image)
 
     # 바코드 인식 불가
@@ -23,9 +23,9 @@ def barcode_detection(image):
 
 if __name__ == "__main__":
     img = cv2.imread("barcode1.jpeg")
-    print(barcode_detection(img))
+    print(detect(img))
 
-    img_url = "http://www.econovill.com/news/photo/201810/348705_226179_4737.JPG"
+    img_url = "https://naeng-bu-test.s3.ap-northeast-2.amazonaws.com/barcode1.jpeg"
     img_nparr = np.asarray(bytearray(requests.get(img_url).content), dtype=np.uint8)
     web_img = cv2.imdecode(img_nparr, cv2.IMREAD_COLOR)
-    print(barcode_detection(web_img))
+    print(detect(web_img))
