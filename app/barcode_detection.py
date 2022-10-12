@@ -4,12 +4,20 @@ import pyzbar.pyzbar as pyzbar
 import requests
 
 
+class NotFoundBarcodeException(Exception):
+    def __init__(self, msg):
+        self.msg = msg
+
+    def __str__(self):
+        return self.msg
+
+
 def detect(image):
     barcode = pyzbar.decode(image)
 
     # 바코드 인식 불가
     if not len(barcode):
-        return None
+        raise NotFoundBarcodeException("Not found barcode")
 
     for _ in barcode:
         print('Type : ', _.type)
