@@ -38,6 +38,11 @@ def parse(_barcode) -> datetime:
     return datetime.now()
 
 
+# TODO: Parsing with api
+def parse_with_api(_barcode) -> datetime:
+    return datetime.now()
+
+
 if __name__ == "__main__":
     img = cv2.imread("barcode1.jpeg")
     barcode = detect(img)
