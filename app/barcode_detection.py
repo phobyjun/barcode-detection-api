@@ -29,11 +29,14 @@ def detect(image):
     return barcode[0]
 
 
+def image_from_url(img_url):
+    img_nparr = np.asarray(bytearray(requests.get(img_url).content), dtype=np.uint8)
+    return cv2.imdecode(img_nparr, cv2.IMREAD_COLOR)
+
+
 if __name__ == "__main__":
     img = cv2.imread("barcode1.jpeg")
     print(detect(img))
 
-    img_url = "https://naeng-bu-test.s3.ap-northeast-2.amazonaws.com/barcode1.jpeg"
-    img_nparr = np.asarray(bytearray(requests.get(img_url).content), dtype=np.uint8)
-    web_img = cv2.imdecode(img_nparr, cv2.IMREAD_COLOR)
+    web_img = image_from_url("https://naeng-bu-test.s3.ap-northeast-2.amazonaws.com/barcode1.jpeg")
     print(detect(web_img))
