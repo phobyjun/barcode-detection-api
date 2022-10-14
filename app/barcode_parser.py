@@ -2,7 +2,7 @@ from datetime import datetime
 
 import cv2
 
-from barcode_detection import detect
+from .barcode_detection import detect
 
 
 class NotGS1BarException(Exception):
