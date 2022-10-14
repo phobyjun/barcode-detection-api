@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from mangum import Mangum
 
-from app.barcode_detection import image_from_url, detect
+from app.barcode_detection import image_from_url, detect, NotFoundBarcodeException
 from app.barcode_parser import parse, NotGS1BarException
 
 app = FastAPI()
@@ -12,13 +12,17 @@ async def health_check():
     return {"status": "success"}
 
 
-default_s3_route = ""
+default_s3_route = "https://naeng-bu-test.s3.ap-northeast-2.amazonaws.com/"
 
 
 @app.get("/barcode/{image_url}")
 async def barcode_detection_api(image_url: str):
     image = image_from_url(default_s3_route + image_url)
-    barcode = detect(image)
+    try:
+        barcode = detect(image)
+    except NotFoundBarcodeException as error:
+        raise HTTPException(status_code=404, detail=error.__str__())
+
     try:
         expiration_date = parse(barcode)
         return {
