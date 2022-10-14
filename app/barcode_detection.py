@@ -17,7 +17,7 @@ def detect(image):
 
     # 바코드 인식 불가
     if len(barcode) == 0:
-        raise NotFoundBarcodeException("Not found barcode")
+        raise NotFoundBarcodeException("Barcode Not Found")
 
     for _ in barcode:
         print('Type : ', _.type)
