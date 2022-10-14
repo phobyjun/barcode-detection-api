@@ -16,7 +16,7 @@ def detect(image):
     barcode = pyzbar.decode(image)
 
     # 바코드 인식 불가
-    if not len(barcode):
+    if len(barcode) == 0:
         raise NotFoundBarcodeException("Not found barcode")
 
     for _ in barcode:
