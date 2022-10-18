@@ -1,8 +1,12 @@
+from dotenv import dotenv_values
 from fastapi import FastAPI, HTTPException
 from mangum import Mangum
 
 from app.barcode_detection import image_from_url, detect, NotFoundBarcodeException
 from app.barcode_parser import parse, NotGS1BarException
+
+CFG = dotenv_values(".env")
+API_KEY = CFG["API_KEY"]
 
 app = FastAPI()
 
