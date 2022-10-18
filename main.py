@@ -7,6 +7,7 @@ from app.barcode_parser import parse, NotGS1BarException
 
 CFG = dotenv_values(".env")
 API_KEY = CFG["API_KEY"]
+API_URL = CFG["API_URL"]
 
 app = FastAPI()
 
