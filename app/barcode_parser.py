@@ -1,8 +1,9 @@
 from datetime import datetime
 
 import cv2
+import requests
 
-from .barcode_detection import detect
+from barcode_detection import detect
 
 
 class NotGS1BarException(Exception):
@@ -38,8 +39,18 @@ def parse(_barcode) -> datetime:
     return datetime.now()
 
 
-# TODO: Parsing with api
-def parse_with_api(_barcode) -> datetime:
+# TODO: API validation check
+def parse_with_api(_barcode, api_key, api_url) -> datetime:
+    service_id = "C005"
+    data_type = "json"
+    start_idx = "1"
+    end_idx = "1000"
+    barcode_data = _barcode.data.decode('utf-8')
+
+    request_url = \
+        api_url + f"{api_key}/{service_id}/{data_type}/{start_idx}/{end_idx}/BAR_CD={barcode_data}"
+    resp = requests.get(request_url)
+
     return datetime.now()
 
 
